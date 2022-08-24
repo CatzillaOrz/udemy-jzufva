@@ -1,0 +1,15 @@
+{
+  "name": "udemy-18forkify",
+  "version": "1.0.0",
+  "description": "udemy js course 287-init forkify",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "catzillaorz",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^2.0.0-rc.0",
+    "sass": "^1.26.10"
+  }
+}
