@@ -16,9 +16,20 @@ const timeout = function (s) {
  *  // https://forkify-api.herokuapp.com/api/v2/recipes/:id
  * feth Recipe
  */
-
+const renderSpinner = function (parentEl) {
+  const markup = `
+    <div class="spinner">
+      <svg>
+        <use href="${icons}#icon-loader"></use>
+      </svg>
+    </div>
+  `;
+  parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', markup);
+};
 const showRecipe = async function () {
   try {
+    renderSpinner(recipeContainer);
     const res = await fetch(
       'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
     );
@@ -80,12 +91,12 @@ const showRecipe = async function () {
 
             <div class="recipe__user-generated">
               <svg>
-                <use href="src/img/icons.vg#icon-user"></use>
+                <use href="${icons}#icon-user"></use>
               </svg>
             </div>
             <button class="btn--round">
               <svg class="">
-                <use href="src/img/icons.svg#icon-bookmark-fill"></use>
+                <use href="${icons}#icon-bookmark-fill"></use>
               </svg>
             </button>
           </div>
@@ -98,7 +109,7 @@ const showRecipe = async function () {
                 return `
               <li class="recipe__ingredient">
                 <svg class="recipe__icon">
-                  <use href="src/img/icons.svg#icon-check"></use>
+                  <use href="${icons}#icon-check"></use>
                 </svg>
                 <div class="recipe__quantity">${ing.quantity}</div>
                 <div class="recipe__description">
