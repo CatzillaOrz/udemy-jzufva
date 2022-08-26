@@ -1,5 +1,8 @@
 import icons from 'url:../img/icons.svg'; // parcel v2.0
 const recipeContainer = document.querySelector('.recipe');
+// support old browers
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 const timeout = function (s) {
   return new Promise(function (_, reject) {
