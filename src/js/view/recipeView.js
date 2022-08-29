@@ -1,3 +1,4 @@
+import icons from 'url:../../img/icons.svg'; // parcel v2.0
 class RecipeView {
   #parentElement = document.querySelector('.recipe');
   #data;
@@ -10,14 +11,14 @@ class RecipeView {
   }
 
   #clear() {
-    this.#recipeContainer.innerHTML = '';
+    this.#parentElement.innerHTML = '';
   }
 
   #generateMarkup() {
     return `
       <figure class="recipe__fig">
             <img src="${this.#data.image}" alt="${
-      recipe.title
+      this.#data.title
     }" class="recipe__img" />
             <h1 class="recipe__title">
               <span>${this.#data.title}</span>
@@ -30,7 +31,7 @@ class RecipeView {
                 <use href="${icons}#icon-clock"></use>
               </svg>
               <span class="recipe__info-data recipe__info-data--minutes">${
-                recipe.cookingTime
+                this.#data.cookingTime
               }</span>
               <span class="recipe__info-text">minutes</span>
             </div>
@@ -39,7 +40,7 @@ class RecipeView {
                 <use href="${icons}#icon-users"></use>
               </svg>
               <span class="recipe__info-data recipe__info-data--people">${
-                recipe.servings
+                this.#data.servings
               }</span>
               <span class="recipe__info-text">servings</span>
 
@@ -97,7 +98,7 @@ class RecipeView {
             <p class="recipe__directions-text">
               This recipe was carefully designed and tested by
               <span class="recipe__publisher">${
-                recipe.publisher
+                this.#data.publisher
               }</span>. Please check out
               directions at their website.
             </p>
