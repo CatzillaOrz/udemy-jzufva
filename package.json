@@ -9,8 +9,9 @@
   "author": "catzillaorz",
   "license": "MIT",
   "devDependencies": {
-    "sass": "^1.26.10",
-    "parcel": "^2.0.0-beta.1"
+    "fractional": "^1.0.0",
+    "parcel": "^2.0.0-beta.1",
+    "sass": "^1.26.10"
   },
   "dependencies": {
     "core-js": "^3.24.1",
