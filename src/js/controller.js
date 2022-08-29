@@ -13,7 +13,7 @@ import 'regenerator-runtime/runtime';
  *  // https://forkify-api.herokuapp.com/api/v2/recipes/:id
  * feth Recipe
  */
-const showRecipe = async function () {
+const controlRecipes = async function () {
   try {
     recipeView.renderSpinner(recipeContainer);
     const id = window.location.hash.slice(1);
@@ -26,5 +26,7 @@ const showRecipe = async function () {
     console.log(e);
   }
 };
-
-['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
+init();
