@@ -21,20 +21,9 @@ import 'regenerator-runtime/runtime';
  *  // https://forkify-api.herokuapp.com/api/v2/recipes/:id
  * feth Recipe
  */
-const renderSpinner = function (parentEl) {
-  const markup = `
-    <div class="spinner">
-      <svg>
-        <use href="${icons}#icon-loader"></use>
-      </svg>
-    </div>
-  `;
-  parentEl.innerHTML = '';
-  parentEl.insertAdjacentHTML('afterbegin', markup);
-};
 const showRecipe = async function () {
   try {
-    renderSpinner(recipeContainer);
+    recipeView.renderSpinner(recipeContainer);
     const id = window.location.hash.slice(1);
     if (!id) return;
     await model.loadRecipe(id);
