@@ -5,6 +5,7 @@ const recipeContainer = document.querySelector('.recipe');
 // support old browers
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+import { async } from 'regenerator-runtime';
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -24,6 +25,13 @@ const controlRecipes = async function () {
     recipeView.render(model.state.recipe);
   } catch (e) {
     recipeView.renderError();
+  }
+};
+const controlSearchResults = async function () {
+  try {
+    await model.loadSearchResults('pizza');
+  } catch (err) {
+    console.log(err);
   }
 };
 const init = function () {
