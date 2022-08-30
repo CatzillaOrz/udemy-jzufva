@@ -1,8 +1,8 @@
 import recipeView from './view/recipeView.js';
-import { state } from './model.js';
 import * as model from './model.js';
 import searchView from './view/searchView.js';
 import resultsView from './view/resultsView.js';
+import { state } from './model.js';
 const recipeContainer = document.querySelector('.recipe');
 
 // support old browers
@@ -10,6 +10,9 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
+if (module.hot) {
+  module.hot.accept();
+}
 // https://forkify-api.herokuapp.com/v2
 
 /**
