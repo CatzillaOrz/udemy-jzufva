@@ -1,6 +1,7 @@
 import recipeView from './view/recipeView.js';
 import * as model from './model.js';
-import searchView from './view/searchView.js';
+import searchView from './search/searchView.js';
+import resultsView from './view/resultsView.js';
 const recipeContainer = document.querySelector('.recipe');
 
 // support old browers
