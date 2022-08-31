@@ -44,11 +44,17 @@ const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  recipeView.addHandlerUpdateServings(controlServings);
 };
 
 const controlPagination = function (goToPage) {
   resultsView.render(model.getSearchResultsPage(goToPage));
   paginationView.render(model.state.search);
+};
+
+const controlServings = function (newServings) {
+  model.updateServing(newServings);
+  recipeView.render(model.state.recipe);
 };
 
 init();
