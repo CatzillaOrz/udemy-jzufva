@@ -5,33 +5,18 @@ class ResultsView extends View {
   _errorMessage = 'No recipes found for you query! Please try again!';
   _message = '';
 
-  __generateMarkup() {
-    return `
-      <li class="preview">
-        <a class="preview__link" href="#23456">
-          <figure class="preview__fig">
-            <img src="src/img/test-1.jpg" alt="Test" />
-          </figure>
-          <div class="preview__data">
-            <h4 class="preview__name">
-              Pasta with Tomato Cream ...
-            </h4>
-            <p class="preview__publisher">The Pioneer Woman</p>
-          </div>
-        </a>
-      </li>
-
-    `;
-  }
   _generateMarkup() {
     return this._data
       .map(result => this._generateMarkupPreview(result))
       .join('');
   }
   _generateMarkupPreview(result) {
+    const id = window.location.hash.slice(1);
     return `
     <li class="preview">
-      <a class="preview__link" href="#${result.id}">
+      <a class="preview__link ${
+        id === result.id ? 'preview__link--active' : ''
+      }"  href="#${result.id}">
         <figure class="preview__fig">
           <img src="${result.image}" alt="${result.title}" />
         </figure>
