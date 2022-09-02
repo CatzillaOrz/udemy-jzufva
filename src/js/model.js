@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
 import * as Config from './config';
-import { getJSON, sendJSON } from './helpers';
+import { AJAX, getJSON, sendJSON } from './helpers';
 
 export const state = {
   recipe: {},
@@ -13,7 +13,7 @@ export const state = {
   bookmarks: [],
 };
 
-function createRecipeObject(data) {
+const createRecipeObject = function (data) {
   const { recipe } = data.data;
   return {
     id: recipe.id,
@@ -26,13 +26,13 @@ function createRecipeObject(data) {
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
   };
-}
+};
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${Config.API_URL + '/' + id}`);
+    const data = await AJAX(`${Config.API_URL}${id}?key=${Config.KEY}`);
     state.recipe = createRecipeObject(data);
-    if (state.bookmarks.some(bookmark => bookmark.id === recipe.id)) {
+    if (state.bookmarks.some(bookmark => bookmark.id === state.recipe.id)) {
       state.recipe.bookmarked = true;
     } else {
       state.recipe.bookmarked = false;
@@ -46,7 +46,9 @@ export const loadRecipe = async function (id) {
 export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
-    const data = await getJSON(`${Config.API_URL}?search=${query}`);
+    const data = await AJAX(
+      `${Config.API_URL}?search=${query}&key=${Config.KEY}`
+    );
     state.search.results = data.data.recipes.map(rec => {
       return {
         id: rec.id,
@@ -120,7 +122,7 @@ export const uploadRecipe = async function (newRecipe) {
       servings: +newRecipe.servings,
       ingredients,
     };
-    const data = await sendJSON(`${Config.API_URL}?key=${Config.KEY}`, recipe);
+    const data = await AJAX(`${Config.API_URL}?key=${Config.KEY}`, recipe);
     state.recipe = createRecipeObject(data);
   } catch (err) {
     throw err;
