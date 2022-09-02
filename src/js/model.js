@@ -55,6 +55,7 @@ export const loadSearchResults = async function (query) {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        ...(rec.key && { key: rec.key }),
       };
     });
     state.search.page = 1;
@@ -104,7 +105,9 @@ export const uploadRecipe = async function (newRecipe) {
     const ingredients = Object.entries(newRecipe)
       .filter(entry => entry[1] !== '' && entry[0].startsWith('ingredient'))
       .map(ing => {
-        const ingArr = ing[1].replaceAll(' ', '').split(',');
+        // const ingArr = ing[1].replaceAll(' ', '').split(',');
+        const ingArr = ing[1].split(',').map(el => el.trim());
+
         if (ingArr.length !== 3)
           throw new Error(
             'Wrong ingredient format! Please use the correct format :)'
@@ -124,6 +127,7 @@ export const uploadRecipe = async function (newRecipe) {
     };
     const data = await AJAX(`${Config.API_URL}?key=${Config.KEY}`, recipe);
     state.recipe = createRecipeObject(data);
+    addBookmark(state.recipe);
   } catch (err) {
     throw err;
   }
