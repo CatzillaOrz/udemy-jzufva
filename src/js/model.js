@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
 import * as Config from './config';
-import { getJSON } from './helpers';
+import { getJSON, sendJSON } from './helpers';
 
 export const state = {
   recipe: {},
@@ -13,20 +13,24 @@ export const state = {
   bookmarks: [],
 };
 
+function createRecipeObject() {
+  const { recipe } = data.data;
+  return {
+    id: recipe.id,
+    title: recipe.title,
+    publisher: recipe.publisher,
+    sourceUrl: recipe.sourceUrl,
+    image: recipe.image_url,
+    servings: recipe.servings,
+    cookingTime: recipe.cooking_time,
+    ingredients: recipe.ingredients,
+  };
+}
+
 export const loadRecipe = async function (id) {
   try {
     const data = await getJSON(`${Config.API_URL + '/' + id}`);
-    const { recipe } = data.data;
-    state.recipe = {
-      id: recipe.id,
-      title: recipe.title,
-      publisher: recipe.publisher,
-      sourceUrl: recipe.sourceUrl,
-      image: recipe.image_url,
-      servings: recipe.servings,
-      cookingTime: recipe.cooking_time,
-      ingredients: recipe.ingredients,
-    };
+    state.recipe = createRecipeObject(data);
     if (state.bookmarks.some(bookmark => bookmark.id === recipe.id)) {
       state.recipe.bookmarked = true;
     } else {
@@ -119,6 +123,7 @@ export const uploadRecipe = async function (newRecipe) {
     servings: +newRecipe.servings,
     ingredients,
   };
+  sendJSON(`${Config.API_URL}?key=${Config.KEY}`, recipe);
 };
 
 init();
