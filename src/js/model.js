@@ -13,7 +13,7 @@ export const state = {
   bookmarks: [],
 };
 
-function createRecipeObject() {
+function createRecipeObject(data) {
   const { recipe } = data.data;
   return {
     id: recipe.id,
@@ -24,6 +24,7 @@ function createRecipeObject() {
     servings: recipe.servings,
     cookingTime: recipe.cooking_time,
     ingredients: recipe.ingredients,
+    ...(recipe.key && { key: recipe.key }),
   };
 }
 
@@ -109,21 +110,21 @@ export const uploadRecipe = async function (newRecipe) {
         const [quantity, unit, description] = ingArr;
         return { quantity: quantity ? +quantity : null, unit, description };
       });
-    console.log(ingredients);
+
+    const recipe = {
+      title: newRecipe.title,
+      source_url: newRecipe.sourceUrl,
+      image_url: newRecipe.image,
+      publisher: newRecipe.publisher,
+      cooking_time: +newRecipe.cookingTime,
+      servings: +newRecipe.servings,
+      ingredients,
+    };
+    const data = await sendJSON(`${Config.API_URL}?key=${Config.KEY}`, recipe);
+    state.recipe = createRecipeObject(data);
   } catch (err) {
     throw err;
   }
-
-  const recipe = {
-    title: newRecipe.title,
-    source_url: newRecipe.sourceUrl,
-    image_url: newRecipe.image,
-    publisher: newRecipe.publisher,
-    cooking_time: +newRecipe.cookingTime,
-    servings: +newRecipe.servings,
-    ingredients,
-  };
-  sendJSON(`${Config.API_URL}?key=${Config.KEY}`, recipe);
 };
 
 init();
